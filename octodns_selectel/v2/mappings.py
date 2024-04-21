@@ -18,7 +18,7 @@ def to_selectel_rrset(record):
         rrset_records = list(
             map(lambda value: {'content': value}, record.values)
         )
-    elif record._type in {"CNAME", "ALIAS"}:
+    elif record._type in {"CNAME", "ALIAS", "DNAME"}:
         rrset_records = [{'content': record.value}]
     elif record._type == "TXT":
         rrset_records = [
@@ -78,7 +78,7 @@ def to_octodns_record_data(rrset):
     key_for_record_values = "values"
     if rrset_type in {"A", "AAAA", "NS"}:
         record_values = [r['content'] for r in rrset["records"]]
-    elif rrset_type in {"CNAME", "ALIAS"}:
+    elif rrset_type in {"CNAME", "ALIAS", "DNAME"}:
         key_for_record_values = "value"
         record_values = rrset["records"][0]["content"]
     elif rrset_type == "TXT":
