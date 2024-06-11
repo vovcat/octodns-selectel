@@ -172,8 +172,9 @@ class SelectelProvider(BaseProvider):
         self.log.debug(f'_get_zone_id: {zone}')
         if self._zones and zone.decoded_name in self._zones:
             return self._zones[zone.decoded_name]["id"]
+        if self._zones is None:
+            self._zones = {}
         for z in self._client.list_zones(filter=zone.decoded_name):
-            if self._zones is None: self._zones = {}
             self._zones[z["name"]] = z
         return self._zones.get(zone.decoded_name, {}).get('id')
 
