@@ -2,6 +2,8 @@
 #
 #
 
+import sys
+
 from logging import getLogger
 
 from octodns.provider.base import BaseProvider
@@ -162,7 +164,7 @@ class SelectelProvider(BaseProvider):
 
     @property
     def zones(self):
-        self.log.debug(f'properety zones: {zone} called from {sys._getframe().f_back}')
+        self.log.debug(f'property zones called from {sys._getframe().f_back}')
         if self._zones is None:
             self.log.debug('View zones')
             self._zones = {zone['name']: zone for zone in self._client.list_zones()}
