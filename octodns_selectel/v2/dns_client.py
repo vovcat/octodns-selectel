@@ -10,7 +10,7 @@ class DNSClient:
     API_URL = 'https://api.selectel.ru/domains/v2'
     _PAGINATION_LIMIT = 1000
 
-    _zone_path = "/zones"
+    _zones_path = "/zones"
     __rrsets_path = "/zones/{}/rrset"
     __rrsets_path_specific = "/zones/{}/rrset/{}"
 
@@ -84,10 +84,13 @@ class DNSClient:
         return items
 
     def list_zones(self, filter=''):
-        return self._request_all_entities(self._zone_path, filter=filter)
+        return self._request_all_entities(self._zones_path, filter=filter)
 
     def create_zone(self, name):
-        return self._request('POST', self._zone_path, data=dict(name=name))
+        return self._request('POST', self._zones_path, data=dict(name=name))
+
+    def delete_zone(self, zone_id):
+        return self._request('DELETE', f'{self._zones_path}/{zone_id}')
 
     def list_rrsets(self, zone_id):
         path = self._rrset_path(zone_id)
